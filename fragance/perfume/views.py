@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from .forms import ProductorForm, ProveedorForm
+from .models import vam_contrato, vam_elemento_contrato, vam_productor, vam_proveedor, vam_ingrediente_esencia, vam_ingrediente_otro
 
 def index(request):
     context = {} 
@@ -21,5 +22,17 @@ def seleccion(request):
     return render(request, 'perfume/seleccion.html', { 'form': form,'form2': form2  })
 
 def compra(request, id_productor, id_proveedor):
-    context = {}
-    return render(request, 'perfume/index.html', context)
+    contrato = vam_contrato.objects.get(id_productor=id_productor, id_proveedor=id_proveedor)
+
+    elemento = vam_elemento_contrato.objects.filter(id_contrato=contrato).values('id_ingrediente_esencia_id')
+
+    for e in elemento:
+        esencia = vam_ingrediente_esencia.objects.get(id_ingrediente_esencia = e['id_ingrediente_esencia_id'])
+
+    
+
+    context = {'contrato': contrato, 'elemento': elemento, 'esencia': esencia}
+    return render(request, 'perfume/compra.html', context)
+
+def pedido(request, esencia_id):
+    pass
