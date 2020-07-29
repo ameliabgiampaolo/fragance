@@ -392,10 +392,17 @@ class vam_condicion_contrato(models.Model):
     id_condicion_envio = models.ForeignKey(vam_condicion_envio, on_delete=models.CASCADE, db_column='id_condicion_envio', null=True)
     id_pais_envio = models.IntegerField(null=True)
 
+class PedidoManager(models.Manager):
+    def create_pedido(self, id_pedido, estatus, descripcion, fecha_emision, id_productor, id_proveedor, nfactura, precio_total):
+        pedido = self.create(id_pedido=id_pedido, estatus=estatus, descripcion=descripcion, fecha_emision=fecha_emision, id_productor=id_productor, id_proveedor=id_proveedor, nfactura=nfactura, precio_total=precio_total)
+        pedido.save()
+        return pedido
+
 class vam_pedido(models.Model):
     class Meta:
         db_table = 'vam_pedido'
 
+    objects = PedidoManager()
     id_pedido = models.IntegerField(primary_key=True)
     estatus = models.CharField(max_length=10)
     descripcion = models.CharField(max_length=10)
@@ -409,10 +416,17 @@ class vam_pedido(models.Model):
     id_condicion_pago = models.ForeignKey(vam_condicion_pago, on_delete=models.CASCADE, db_column='id_condicion_pago', null=True)
     id_contrato_pago = models.IntegerField(null=True)
 
+class DetalleManager(models.Manager):
+    def create_detalle(self, id_detalle, id_pedido, cantidad, subtotal, id_presentacion):
+        detalle = self.create(id_detalle=id_detalle,id_pedido=id_pedido, cantidad=cantidad, subtotal=subtotal, id_presentacion=id_presentacion)
+        detalle.save()
+        return detalle
+
 class vam_detalle_pedido(models.Model):
     class Meta:
         db_table = 'vam_detalle_pedido'
 
+    objects = DetalleManager()
     id_pedido = models.ForeignKey(vam_pedido, on_delete=models.CASCADE, db_column='id_pedido')
     id_detalle = models.IntegerField(primary_key=True)
     cantidad = models.IntegerField()
