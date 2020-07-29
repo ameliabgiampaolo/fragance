@@ -1,12 +1,17 @@
 
-
-{{esencia.nombre}}
-
-
-  <label class="publication-tag">
-    <input class="publication-tag__checkbox"
-      type="checkbox" 
-      name="{{ esencia.nombre }}"
-      value="{{ esencia.choice_value }}">
- 
+{% block content %}
+<h1>Selecciona el ingrediente</h1>
+    {% for ing in ingredientes %}
+    <h3><li>{{ing}}</li></h3>
+    {% endfor %}
     
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{formset.management_form}}
+        {% for form in formset %}
+        <div>{{form}}</div>
+
+        {% endfor %}
+        <button type="submit" class="save btn btn-default">Continuar</button>
+    </form>
+{% endblock %}
