@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 import datetime
-from .models import vam_contrato, vam_presentacion, vam_detalle_ pedido, vam_elemento_contrato, vam_productor, vam_proveedor, vam_ingrediente_esencia, vam_ingrediente_otro, vam_pedido, vam_pago
+from .models import vam_contrato, vam_presentacion, vam_detalle_pedido, vam_elemento_contrato, vam_productor, vam_proveedor, vam_ingrediente_esencia, vam_ingrediente_otro, vam_pedido, vam_pago
 from django.forms import formset_factory
 import random
 from .forms import ProductorForm, ProveedorForm, CompraForm
