@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'fragance',
         'USER': 'postgres',
-        'PASSWORD': '26605119',
+        #'PASSWORD': '26605119',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
