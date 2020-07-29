@@ -219,7 +219,7 @@ class vam_fami_ingotro(models.Model):
         db_table = 'vam_fami_ingotro'
 
     id_familia_olfativa = models.ForeignKey(vam_familia_olfativa, on_delete=models.CASCADE, db_column='id_familia_olfativa')    
-    id_ingrediente_otro = models.ForeignKey(vam_ingrediente_esencia, on_delete=models.CASCADE, db_column='id_ingrediente_otro')
+    id_ingrediente_otro = models.ForeignKey(vam_ingrediente_otro, on_delete=models.CASCADE, db_column='id_ingrediente_otro')
 
 class vam_fase(models.Model):
     class Meta:
@@ -417,7 +417,7 @@ class vam_detalle_pedido(models.Model):
     id_detalle = models.IntegerField(primary_key=True)
     cantidad = models.IntegerField()
     subtotal = models.FloatField()
-    id_presentacion = models.ForeignKey(vam_presentacion_perfume, on_delete=models.CASCADE, db_column='id_presentacion')
+    id_presentacion = models.ForeignKey(vam_presentacion, on_delete=models.CASCADE, db_column='id_presentacion')
 
 class vam_pago(models.Model):
     class Meta:
