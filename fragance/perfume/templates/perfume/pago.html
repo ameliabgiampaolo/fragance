@@ -8,8 +8,6 @@
         
   <meta charset="UTF-8">
   <title>Mundo Perfume</title>
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'><link rel="stylesheet" href="{% static "perfume/style.css" %}">
-
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -42,6 +40,50 @@
     </ul>
   </div>
 </nav>
+
+<section>
+    <br></br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Fecha emisión</th>
+                <th scope="col">Precio total</th>
+                <th scope="col">Número de factura</th>
+                <th scope="col">Estatus</th>
+                <th scope="col">Pagar</th>
+            </tr>
+            </thead>
+            <tbody>
+                <form action="" method="POST">
+                {% csrf_token %}
+            
+                {% for p in pedido %}          
+            <tr>
+                <th scope="row">{{p.id_pedido}}</th>
+                <td>{{p.fecha_emision}}</td>
+                <td>{{p.precio_total}}</td>
+                <td>{{p.nfactura}}</td>
+                <td>{{p.estatus}}</td>
+                <td><a class="btn btn-success" href="{% url 'save' p.id_pedido %}">{{ p.id_pedido }}</a></td>
+            </tr>
+            {% endfor %} 
+            </form>   
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
     
 </body>
 <!-- partial -->
