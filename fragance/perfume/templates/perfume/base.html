@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+        <!-- Cargando librerias para bootstrap 4 -->
+        {% load bootstrap4 %}
+        {% bootstrap_css %}
+        {% load static %}
+        {% block content %}
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Mundo Perfume- Home</title>
+        <link rel="icon" href="{% static "perfume2/img/Fevicon.png" type="image/png" %}">
+        <link rel="stylesheet" href="{% static "perfume2/vendors/bootstrap/bootstrap.min.css" %}">
+        <link rel="stylesheet" href="{% static "perfume2/vendors/fontawesome/css/all.min.css" %}">
+        <link rel="stylesheet" href="{% static "perfume2/vendors/nice-select/nice-select.css" %}">
+        <link rel="stylesheet" href="{% static "perfume2/vendors/owl-carousel/owl.theme.default.min.css" %}">
+        <link rel="stylesheet" href="{% static "perfume2/vendors/owl-carousel/owl.carousel.min.css" %}">
+      
+        <link rel="stylesheet" href="{% static "perfume2/css/style.css" %}">
+</head>
+<body>
+
+
+
+        <!--================ Start Header Menu Area =================-->
+        
+        <header class="header_area">
+          <div class="main_menu">
+            <nav class="navbar navbar-expand-lg navbar-light">
+              <div class="container">
+                <a class="navbar-brand logo_h" href="index.html"><img src="{% static "perfume2/img/logo.png" %}" alt=""></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                  <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+                    <li class="nav-item active"><a class="nav-link" href="http://localhost:8000/perfume/">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Compras</a></li>
+           <li class="nav-item"><a class="nav-link" href="pago">Administrar Pagos</a></li>
+          
+          <li class="nav-item submenu dropdown">
+                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false">Reportes</a>
+                      <ul class="dropdown-menu">
+                        <li class="nav-item"><a class="nav-link" href="#">Reporte X</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Reporte Y</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Reporte Z</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+        
+                  <ul class="nav-shop">
+                    <li class="nav-item"><a class="button button-header" href="seleccion">¡Adquiere tus ingredientes YA!</a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header>
+        
+        <!--================ End Header Menu Area =================-->
+
+  <!--================ Start footer Area  =================-->	
+  <footer class="footer">
+		<div class="footer-area">
+		</div>
+
+	</footer>
+	<!--================ End footer Area  =================-->
+
+
+
+  <script src="{% static "perfume2/vendors/jquery/jquery-3.2.1.min.js" %}"></script>
+  <script src="{% static "perfume2/vendors/bootstrap/bootstrap.bundle.min.js" %}"></script>
+  <script src="{% static "perfume2/vendors/skrollr.min.js" %}"></script>
+  <script src="{% static "perfume2/vendors/owl-carousel/owl.carousel.min.js" %}"></script>
+  <script src="{% static "perfume2/vendors/nice-select/jquery.nice-select.min.js" %}"></script>
+  <script src="{% static "perfume2/js/main.js" %}"></script>
+
+  {% endblock content %}
+
+</html>

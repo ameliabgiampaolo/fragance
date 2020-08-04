@@ -5,49 +5,157 @@
         {% load bootstrap4 %}
         {% bootstrap_css %}
         {% load static %}
-        
-  <meta charset="UTF-8">
-  <title>Mundo Perfume</title>
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'><link rel="stylesheet" href="{% static "perfume/style.css" %}">
 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Mundo Perfume- Home</title>
+        <link rel="icon" href="{% static "perfume2/img/Fevicon.png" type="image/png" %}">
+        <link rel="stylesheet" href="{% static "perfume2/vendors/bootstrap/bootstrap.min.css" %}">
+        <link rel="stylesheet" href="{% static "perfume2/vendors/fontawesome/css/all.min.css" %}">
+        <link rel="stylesheet" href="{% static "perfume2/vendors/nice-select/nice-select.css" %}">
+        <link rel="stylesheet" href="{% static "perfume2/vendors/owl-carousel/owl.theme.default.min.css" %}">
+        <link rel="stylesheet" href="{% static "perfume2/vendors/owl-carousel/owl.carousel.min.css" %}">
+      
+        <link rel="stylesheet" href="{% static "perfume2/css/style.css" %}">
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<body>
+    {% block content %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Mundo Perfume</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<!--================ Start Header Menu Area =================-->
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="seleccion">Compras</a>
-      </li>
-            <li class="nav-item">
-        <a class="nav-link" href="pago">Administrar pagos</a>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+<header class="header_area">
+  <div class="main_menu">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand logo_h" href="index.html"><img src="{% static "perfume2/img/logo.png" %}" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+          <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+            <li class="nav-item active"><a class="nav-link" href="http://localhost:8000/perfume/">Inicio</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Compras</a></li>
+   <li class="nav-item"><a class="nav-link" href="pago">Administrar Pagos</a></li>
+  
+  <li class="nav-item submenu dropdown">
+                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                aria-expanded="false">Reportes</a>
+              <ul class="dropdown-menu">
+                <li class="nav-item"><a class="nav-link" href="#">Reporte X</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Reporte Y</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Reporte Z</a></li>
+              </ul>
+            </li>
+          </ul>
+
+          <ul class="nav-shop">
+            <li class="nav-item"><a class="button button-header" href="seleccion">¡Adquiere tus ingredientes YA!</a></li>
+          </ul>
         </div>
-      </li>
-    </ul>
+      </div>
+    </nav>
   </div>
-</nav>
-{% block content %}
-{% endblock content %}
-</body>
-<!-- partial -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js'></script><script  src="{% static "perfume/script.js" %}"></script>
+</header>
 
+<!--================ End Header Menu Area =================-->
+
+<main class="site-main">
+    
+    <!--================ Hero banner start =================-->
+    <section class="hero-banner">
+      <div class="container">
+        <div class="row no-gutters align-items-center pt-60px">
+          <div class="col-5 d-none d-sm-block">
+            <div class="hero-banner__img">
+              <img class="img-fluid" src="{% static "perfume2/img/home/hero-banner.png" %}" alt="">
+            </div>
+          </div>
+          <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
+            <div class="hero-banner__content">
+              <h4>Comprar es divertido</h4>
+              <h1>Compra a tus proveedores los ingredientes</h1>
+              <p>Compra los ingredientes necesarios para preparar los perfumes. Haz click en el botón
+		y empieza el proceso.</p>
+              <a class="button button-hero" href="#">¡Adquiere tus ingredientes YA!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================ Hero banner start =================-->
+
+    <!--================ Hero Carousel start =================-->
+    <br></br>
+    <section class="section-margin mt-0">
+      <div class="container">
+        <div class="section-intro pb-60px">
+          <h2><span class="section-intro__style">Empresas proveedoras</span></h2>
+        </div>
+	</div>
+      <div class="owl-carousel owl-theme hero-carousel">
+        <div class="hero-carousel__slide">
+          <img src="{% static "perfume2/img/home/hero-slide1.png" %}" alt="" class="img-fluid">
+          <a href="#" class="hero-carousel__slideOverlay">
+            <h3>BASF</h3>
+            <p>https://aroma-products.basf.com/</p>
+          </a>
+        </div>
+        <div class="hero-carousel__slide">
+          <img src="{% static "perfume2/img/home/hero-slide2.png" %}" alt="" class="img-fluid">
+          <a href="#" class="hero-carousel__slideOverlay">
+            <h3>Vioryl</h3>
+            <p>http://www.vioryl.gr/</p>
+          </a>
+        </div>
+        <div class="hero-carousel__slide">
+          <img src="{% static "perfume2/img/home/hero-slide3.png" %}" alt="" class="img-fluid">
+          <a href="#" class="hero-carousel__slideOverlay">
+            <h3>Bordas</h3>
+            <p>https://www.bordas-sa.com/</p>
+          </a>
+        </div>
+        <div class="hero-carousel__slide">
+          <img src="{% static "perfume2/img/home/hero-slide4.png" %}" alt="" class="img-fluid">
+          <a href="#" class="hero-carousel__slideOverlay">
+            <h3>Fraccaroli</h3>
+            <p>https://fraccaroli.com.br/</p>
+          </a>
+        </div>
+        <div class="hero-carousel__slide">
+          <img src="{% static "perfume2/img/home/hero-slide5.png" %}" alt="" class="img-fluid">
+          <a href="#" class="hero-carousel__slideOverlay">
+            <h3>Agan-Aroma</h3>
+            <p>https://www.agan-aroma.com/</p>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!--================ Hero Carousel end =================-->
+
+
+  <!--================ Start footer Area  =================-->	
+	<footer class="footer">
+		<div class="footer-area">
+		</div>
+
+	</footer>
+	<!--================ End footer Area  =================-->
+
+
+
+  <script src="{% static "perfume2/vendors/jquery/jquery-3.2.1.min.js" %}"></script>
+  <script src="{% static "perfume2/vendors/bootstrap/bootstrap.bundle.min.js" %}"></script>
+  <script src="{% static "perfume2/vendors/skrollr.min.js" %}"></script>
+  <script src="{% static "perfume2/vendors/owl-carousel/owl.carousel.min.js" %}"></script>
+  <script src="{% static "perfume2/vendors/nice-select/jquery.nice-select.min.js" %}"></script>
+  <script src="{% static "perfume2/js/main.js" %}"></script>
+
+  {% endblock content %}
 </body>
 </html>
+
+
