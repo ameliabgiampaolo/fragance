@@ -61,26 +61,41 @@
   </div>
 </header>
 <!--================ End Header Menu Area =================-->
+<br></br>
 
-    <h2>Selecciona el productor</h2>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
+<div class="container" style="text-align: center;">
+        <div class="section-intro pb-60px">
+          <h2><span class="section-intro__style">Empresas proveedoras y productoras</span></h2>
+        </div>
+</div>
 
+<br></br>  
 
-    <h2>Selecciona el proveedor</h2>
-        {{ form2.as_p }}
-        <button type="submit" class="save btn btn-default">Continuar</button>
-    </form>
+    <div class="hero-banner__content">
+        <div class="row">
+            <div class="form-group col-lg-6">
+                <form method="POST" class="post-form">
+                {% csrf_token %}
+                <h4>{{ form.as_p }}</h4>
+            </div>
+        <div class="row">
+            <div class="form-group col-lg-6">
+                <h4>{{ form2.as_p }}</h4>
+            </div>
+        </div>
+    </div>
 
+</div>
+</div>
 
-<!--================ Start footer Area  =================-->	
-<footer class="footer">
-		<div class="footer-area">
-		</div>
-
-	</footer>
-    <!--================ End footer Area  =================-->
+    <div class="form-row text-center">
+        <div class="col-12">
+            <button type="submit" class="button button-header">Continuar</button>
+        </div>
+    </div>
     
+    </form>
+  
   <script src="{% static "perfume2/vendors/jquery/jquery-3.2.1.min.js" %}"></script>
   <script src="{% static "perfume2/vendors/bootstrap/bootstrap.bundle.min.js" %}"></script>
   <script src="{% static "perfume2/vendors/skrollr.min.js" %}"></script>
