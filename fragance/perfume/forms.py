@@ -19,8 +19,8 @@ class ProveedorForm(forms.ModelForm):
       fields = ('proveedor', )
 
 class CompraForm(forms.Form):
-  esencia = forms.CharField(label='Ingrediente')
-  cantidad = forms.Field(widget=forms.NumberInput)
+  esencia = forms.CharField(label='Ingrediente', widget= forms.TextInput(attrs= { 'class': 'form-control', 'style': 'width: 300px; text-align: center; '}))
+  cantidad = forms.Field(widget=forms.NumberInput(attrs= { 'class': 'form-control', 'style': 'width: 100px; text-align: center; '}))
 
 class Ingrediente_esencia(forms.ModelForm):
   esencia = forms.ChoiceField(choices=[(ing.id_ingrediente_esencia, ing.nombre) for ing in vam_ingrediente_esencia.objects.all()])
