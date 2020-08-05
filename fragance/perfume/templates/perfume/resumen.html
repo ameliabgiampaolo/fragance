@@ -77,7 +77,7 @@
           <tr>
             <th scope="col">ID del pedido</th>
             <th scope="col">Productor</th>
-            <th scope="col">proveedor</th>
+            <th scope="col">Proveedor</th>
             <th scope="col">Ingredientes</th>
             <th scope="col">Cantidad</th>
           </tr>
@@ -95,7 +95,7 @@
       <br></br>
 
       <div class="trans">
-           <a class="btn btn-danger" href="http://localhost:8000/perfume">Cancelar pedido</a>
+           <a class="btn btn-danger" href="{% url 'delete' id_pedido %}">{{ id_pedido }}</a>
            <a class="btn btn-primary" href="http://localhost:8000/perfume">Finalizar</a>
     </div>
 

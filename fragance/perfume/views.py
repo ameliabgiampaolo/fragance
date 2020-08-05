@@ -118,3 +118,12 @@ def resumen(request, id_pedido, cantidad, proveedor, productor, ingrediente):
     #elif ingrediente_otro == None:
         #context = {'id_pedido': id_pedido, 'cantidad': cantidad, 'proveedor': proveedor, 'productor': productor, 'ingrediente': ingrediente, 'ingrediente_otro': 0}
         #return render(request, 'perfume/resumen.html', context)
+
+def delete(request, id_pedido): 
+    context ={} 
+    detalle_pedido = vam_detalle_pedido.objects.get(id_pedido=id_pedido)
+    pedido = vam_pedido.objects.get(id_pedido=id_pedido)
+
+    detalle_pedido.delete()
+    pedido.delete()  
+    return render(request, 'perfume/index.html', context)

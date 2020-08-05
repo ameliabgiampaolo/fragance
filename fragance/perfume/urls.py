@@ -8,5 +8,6 @@ urlpatterns = [
     path('error404', views.compra, name='error404'),
     path('resumen/<int:id_pedido>/<int:cantidad>/<int:proveedor>/<int:productor>/(<str:ingrediente>', views.resumen, name='resumen'),
     path('pago', views.pago, name='pago'),
+    path('delete/<int:id_pedido>', views.delete, name='delete'),
     path('save/<int:id_pedido>', views.save, name='save'),
 ]
