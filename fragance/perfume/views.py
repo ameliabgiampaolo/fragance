@@ -29,6 +29,8 @@ def seleccion(request):
     return render(request, 'perfume/seleccion.html', { 'form': form,'form2': form2  })
 
 def compra(request, id_productor, id_proveedor):
+    productor = id_productor
+    proveedor = id_proveedor
     Contrato = True
     try:
         contrato = vam_contrato.objects.get(id_productor=id_productor, id_proveedor=id_proveedor)
@@ -62,8 +64,8 @@ def compra(request, id_productor, id_proveedor):
                     id_detalle = next_val(vam_detalle_pedido)
                     pedido = vam_pedido.objects.create_pedido(id_pedido,'pendiente', 'nada', now, id_productor, id_proveedor, random.randint(1,100), presentacion.precio)
                     detalle = vam_detalle_pedido.objects.create_detalle(id_detalle,pedido, cantidad, presentacion.precio, presentacion)
-                    
-                return redirect('index')
+
+                return redirect('resumen', id_pedido, cantidad, proveedor, productor, ingrediente)
 
         else:
             formset = CompraFormset
@@ -100,3 +102,19 @@ def save(request, id_pedido):
     
     context = {'pedido': pedido}
     return render(request, 'perfume/pago.html', context)
+
+def resumen(request, id_pedido, cantidad, proveedor, productor, ingrediente):
+    
+    ingrediente2= vam_ingrediente_esencia.objects.get(nombre=ingrediente)
+    if ingrediente2 == None:
+        ingrediente2= vam_ingrediente_otro.objects.get(nombre=ingrediente)
+
+    proveedor = vam_proveedor.objects.get(id_proveedor=proveedor)
+    productor = vam_productor.objects.get(id_productor=productor)
+    #ingrediente_otro = vam_ingrediente_otro.objects.get(id_ingrediente_otro = ingrediente_otro.id_ingrediente_otro)
+    #if ingrediente == None:
+    context = {'id_pedido': id_pedido, 'cantidad': cantidad, 'proveedor': proveedor, 'productor': productor, 'ingrediente2': ingrediente2}
+    return render(request, 'perfume/resumen.html', context)
+    #elif ingrediente_otro == None:
+        #context = {'id_pedido': id_pedido, 'cantidad': cantidad, 'proveedor': proveedor, 'productor': productor, 'ingrediente': ingrediente, 'ingrediente_otro': 0}
+        #return render(request, 'perfume/resumen.html', context)
