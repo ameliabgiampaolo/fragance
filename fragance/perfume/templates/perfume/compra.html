@@ -84,22 +84,19 @@
             </div>
     </div>
     
-    <form method="POST" class="post-form">
-        <div class="row">
-            <div class="col-md-4">
-                {% csrf_token %}
-                {{formset.management_form}}
-            </div>
-                {% for form in formset %}
-                {{form.as_p}}
-                {% endfor %}
-        </div>
+    <div class="hero-banner__content">
+      <div class="row">
+          <div class="col-md-6">
+              <form method="POST" class="post-form">
+              {% csrf_token %}
+              <h4>{{ form.as_p }}</h4>
+          </div>
+  </div>
         <div class="form-row text-center">
             <div class="col-12">
                 <button type="submit" class="button button-header">Continuar</button>
          </div>
 </div>
-    </form>
     <br></br>
 </body>
 

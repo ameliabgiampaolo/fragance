@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import vam_productor, vam_proveedor, vam_ingrediente_esencia
+from .models import vam_productor, vam_proveedor, vam_ingrediente_esencia, vam_ingrediente_otro
 
 class ProductorForm(forms.ModelForm):
 
@@ -22,9 +22,10 @@ class CompraForm(forms.Form):
   esencia = forms.CharField(label='Ingrediente', widget= forms.TextInput(attrs= { 'class': 'form-control', 'style': 'width: 300px; text-align: center; '}))
   cantidad = forms.Field(widget=forms.NumberInput(attrs= { 'class': 'form-control', 'style': 'width: 100px; text-align: center; '}))
 
-class Ingrediente_esencia(forms.ModelForm):
-  esencia = forms.ChoiceField(choices=[(ing.id_ingrediente_esencia, ing.nombre) for ing in vam_ingrediente_esencia.objects.all()])
+class IngForm(forms.Form):
+  def __init__(self, choice, *args, **kwargs):
+    super(IngForm, self).__init__(*args, *kwargs)
+    self.fields['ingredientes'] = forms.ChoiceField(choices=tuple([(name, name) for name in choice]))
+    self.fields['cantidad'] = forms.Field(widget=forms.NumberInput(attrs= { 'class': 'form-control', 'style': 'width: 100px; text-align: center; '}))
   class Meta:
-    model = vam_ingrediente_esencia
-    fields = ('nombre',)
-
+    fields = ('ingredientes', 'cantidad',)
