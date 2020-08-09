@@ -25,7 +25,10 @@ class CompraForm(forms.Form):
 class IngForm(forms.Form):
   def __init__(self, choice, *args, **kwargs):
     super(IngForm, self).__init__(*args, *kwargs)
-    self.fields['ingredientes'] = forms.ChoiceField(choices=tuple([(name, name) for name in choice]))
-    self.fields['cantidad'] = forms.Field(widget=forms.NumberInput(attrs= { 'class': 'form-control', 'style': 'width: 100px; text-align: center; '}))
+    self.fields['ingredientes'] = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=tuple([(name, name) for name in choice]))
+    #self.fields['cantidad'] = forms.Field(widget=forms.NumberInput(attrs= { 'class': 'form-control', 'style': 'width: 100px; text-align: center; '}))
   class Meta:
-    fields = ('ingredientes', 'cantidad',)
+    fields = ('ingredientes',)
+
+class CantidadForm(forms.Form):
+  cantidad = forms.Field(widget=forms.NumberInput(attrs= { 'class': 'form-control', 'style': 'width: 100px; text-align: center; '}))

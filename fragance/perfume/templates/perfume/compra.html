@@ -89,12 +89,17 @@
           <div class="col-md-6">
               <form method="POST" class="post-form">
               {% csrf_token %}
+              {{ formset.management_form }}
               <h4>{{ form.as_p }}</h4>
+              
+              {% for form in formset %}
+              {{ form }}
+              {% endfor %}
           </div>
   </div>
         <div class="form-row text-center">
             <div class="col-12">
-                <button type="submit" class="button button-header">Continuar</button>
+                <button type="submit" class="button button-success">Continuar</button>
          </div>
 </div>
     <br></br>

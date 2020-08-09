@@ -4,7 +4,7 @@ import datetime
 from .models import vam_contrato, vam_presentacion, vam_detalle_pedido, vam_elemento_contrato, vam_productor, vam_proveedor, vam_ingrediente_esencia, vam_ingrediente_otro, vam_pedido, vam_pago
 from django.forms import formset_factory
 import random
-from .forms import ProductorForm, ProveedorForm, CompraForm, IngForm
+from .forms import ProductorForm, ProveedorForm, CompraForm, IngForm, CantidadForm
 
 def index(request):
     context = {} 
@@ -29,6 +29,8 @@ def seleccion(request):
     return render(request, 'perfume/seleccion.html', { 'form': form,'form2': form2  })
 
 def compra(request, id_productor, id_proveedor):
+    productor = id_productor
+    proveedor = id_proveedor
     try:
         contrato = vam_contrato.objects.get(id_productor=id_productor, id_proveedor=id_proveedor)
     except vam_contrato.DoesNotExist:
@@ -37,48 +39,36 @@ def compra(request, id_productor, id_proveedor):
 
     elemento = vam_elemento_contrato.objects.filter(id_contrato=contrato).values('id_ingrediente_esencia_id', 'id_ingrediente_otro_id')
     ingredientes = []
+    for e in elemento:
+        if e['id_ingrediente_esencia_id'] != None:
+            ingredientes.append(vam_ingrediente_esencia.objects.get(id_ingrediente_esencia = e['id_ingrediente_esencia_id']).nombre)
+        else:
+            ingredientes.append(vam_ingrediente_otro.objects.get(id_ingrediente_otro = e['id_ingrediente_otro_id']).nombre) 
+
+    CantidadFormset = formset_factory(CantidadForm, extra=len(ingredientes))
+
     if request.method == 'POST':
-        pass
-    else:  
-        for e in elemento:
-            if e['id_ingrediente_esencia_id'] != None:
-                ingredientes.append(vam_ingrediente_esencia.objects.get(id_ingrediente_esencia = e['id_ingrediente_esencia_id']).nombre)
-            else:
-                ingredientes.append(vam_ingrediente_otro.objects.get(id_ingrediente_otro = e['id_ingrediente_otro_id']).nombre) 
-
-        print(ingredientes)
-        form = IngForm(ingredientes)
-        context = {'ingredientes': ingredientes, 'form': form }
-        return render(request, 'perfume/compra.html', context)
-
-"""def compra(request, id_productor, id_proveedor):
-    productor = id_productor
-    proveedor = id_proveedor
-    Contrato = True
-    try:
-        contrato = vam_contrato.objects.get(id_productor=id_productor, id_proveedor=id_proveedor)
-    except vam_contrato.DoesNotExist:
-        Contrato = False
-        context = {} 
-        return render(request, 'perfume/error404.html', context)
-    if Contrato == True:
-        elemento = vam_elemento_contrato.objects.filter(id_contrato=contrato).values('id_ingrediente_esencia_id', 'id_ingrediente_otro_id')
-        ingredientes = []
-        CompraFormset = formset_factory(CompraForm, extra=len(elemento))
+        form = IngForm(ingredientes, request.POST)
+        formset = CantidadFormset(request.POST)
+        cantidad = []
         now = datetime.date.today()
-        if request.method == 'POST':
-            formset = CompraFormset(request.POST)
-            if formset.is_valid():
-                for form in formset:
-                    ingrediente = form.cleaned_data.get('esencia')
-                    cantidad = form.cleaned_data.get('cantidad')
+        i = 0
+        if formset.is_valid():
 
-                    ingrediente2= vam_ingrediente_esencia.objects.get(nombre=ingrediente)
-                    if ingrediente2 == None:
-                        ingrediente2= vam_ingrediente_otro.objects.get(nombre=ingrediente)
-
-                    presentacion = vam_presentacion.objects.filter(id_ingrediente_esencia=ingrediente2)[0]
-                    if presentacion == None:
+            for fset in formset:
+                if fset.cleaned_data.get('cantidad') != None:
+                    ingrediente = ingredientes[i]
+                    cantidad = fset.cleaned_data.get('cantidad')
+                    esencia = True
+                    try:
+                        ingrediente2 = vam_ingrediente_esencia.objects.get(nombre=ingrediente)
+                    except vam_ingrediente_esencia.DoesNotExist as e:
+                        ingrediente2 = vam_ingrediente_otro.objects.get(nombre=ingrediente)
+                        esencia = False
+                        
+                    if esencia == True:
+                        presentacion = vam_presentacion.objects.filter(id_ingrediente_esencia=ingrediente2)[0]
+                    else:
                         presentacion = vam_presentacion.objects.filter(id_ingrediente_otro=ingrediente2)[0]
 
                     id_productor = vam_productor.objects.get(id_productor=id_productor)
@@ -87,19 +77,14 @@ def compra(request, id_productor, id_proveedor):
                     id_detalle = next_val(vam_detalle_pedido)
                     pedido = vam_pedido.objects.create_pedido(id_pedido,'pendiente', 'nada', now, id_productor, id_proveedor, random.randint(1,100), presentacion.precio)
                     detalle = vam_detalle_pedido.objects.create_detalle(id_detalle,pedido, cantidad, presentacion.precio, presentacion)
-
-                return redirect('resumen', id_pedido, cantidad, proveedor, productor, ingrediente)
-
-        else:
-            formset = CompraFormset
-            for e in elemento:
-                if e['id_ingrediente_esencia_id'] != None:
-                    ingredientes.append(vam_ingrediente_esencia.objects.get(id_ingrediente_esencia = e['id_ingrediente_esencia_id']).nombre)
-                else:
-                    ingredientes.append(vam_ingrediente_otro.objects.get(id_ingrediente_otro = e['id_ingrediente_otro_id']).nombre) 
-
-            context = {'ingredientes': ingredientes, 'formset': formset }
-            return render(request, 'perfume/compra.html', context)"""
+                    i += 1
+                
+            return redirect('resumen', id_pedido, cantidad, proveedor, productor, ingrediente)
+    else:  
+        formset = CantidadFormset()
+        form = IngForm(ingredientes)
+        context = {'ingredientes': ingredientes, 'form': form, 'formset': formset }
+        return render(request, 'perfume/compra.html', context)
 
 def pago(request):
     pedido = vam_pedido.objects.filter(estatus='pendiente')
@@ -128,8 +113,9 @@ def save(request, id_pedido):
 
 def resumen(request, id_pedido, cantidad, proveedor, productor, ingrediente):
     
-    ingrediente2= vam_ingrediente_esencia.objects.get(nombre=ingrediente)
-    if ingrediente2 == None:
+    try:
+        ingrediente2= vam_ingrediente_esencia.objects.get(nombre=ingrediente)
+    except vam_ingrediente_esencia.DoesNotExist:
         ingrediente2= vam_ingrediente_otro.objects.get(nombre=ingrediente)
 
     proveedor = vam_proveedor.objects.get(id_proveedor=proveedor)
