@@ -16,6 +16,9 @@ class vam_asociacion_nacional(models.Model):
     region = models.CharField(max_length=15) #check = asia-pacifico, europa, norteamerica, latinoamerica
     id_pais = models.ForeignKey(vam_pais, on_delete=models.CASCADE, db_column='id_pais')
 
+    def __str__(self):
+        return self.nombre
+
 class vam_proveedor(models.Model):
     class Meta:
         db_table = 'vam_proveedor'
@@ -30,12 +33,16 @@ class vam_proveedor(models.Model):
 class vam_productor(models.Model):
     class Meta:
         db_table = 'vam_productor'
+        verbose_name_plural = "Productores"
 
     id_productor = models.IntegerField(primary_key=True)
     nombre = models.CharField(max_length=20)
-    pag_web = models.CharField(max_length=50)
+    pag_web = models.CharField(max_length=50, verbose_name="pagina web")
     email = models.CharField(max_length=50)
     id_asociacion = models.ForeignKey(vam_asociacion_nacional, on_delete=models.CASCADE, db_column='id_asociacion', null=True)
+
+    def __str__(self):
+        return self.nombre
 
 class vam_miembro_ifra(models.Model):
     class Meta:
