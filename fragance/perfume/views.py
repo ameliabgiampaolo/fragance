@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 import datetime
-from .models import vam_contrato, vam_presentacion, vam_detalle_pedido, vam_elemento_contrato, vam_productor, vam_proveedor, vam_ingrediente_esencia, vam_ingrediente_otro, vam_pedido, vam_pago
+from .models import vam_contrato, vam_presentacion, vam_condicion_envio, vam_detalle_pedido, vam_elemento_contrato, vam_productor, vam_proveedor, vam_ingrediente_esencia, vam_ingrediente_otro, vam_pedido, vam_pago, vam_condicion_pago
 from django.forms import formset_factory
 import random
 from .forms import ProductorForm, ProveedorForm, CompraForm, IngForm, CantidadForm
@@ -31,6 +31,8 @@ def seleccion(request):
 def compra(request, id_productor, id_proveedor):
     productor = id_productor
     proveedor = id_proveedor
+    condicion_envio = vam_condicion_envio.objects.get(id_condicion_envio = 9)
+    condicion_pago = vam_condicion_pago.objects.get(id_condicion_pago = 2)
     try:
         contrato = vam_contrato.objects.get(id_productor=id_productor, id_proveedor=id_proveedor)
     except vam_contrato.DoesNotExist:
@@ -81,11 +83,13 @@ def compra(request, id_productor, id_proveedor):
 
                     if pedido_creado == False:
                         id_pedido = next_val(vam_pedido)
-                        pedido = vam_pedido.objects.create_pedido(id_pedido,'pendiente', 'nada', now, productor_id, proveedor_id, random.randint(1,100), presentacion.precio)
+                        pedido = vam_pedido.objects.create_pedido(id_pedido,'pendiente', 'via email', now, productor_id, proveedor_id, random.randint(1,100), presentacion.precio, condicion_envio, 1, condicion_pago)
                         pedido_creado = True
                         
                     id_detalle = next_val(vam_detalle_pedido)
                     detalle = vam_detalle_pedido.objects.create_detalle(id_detalle,pedido, cantidad, presentacion.precio, presentacion)
+                    id_pago = next_val(vam_pago)
+                    pago = vam_pago.objects.create_pago(id_pago, now, presentacion.precio, pedido)
                     i += 1
                 
             return redirect('resumen', id_pedido, resumen_cantidad, proveedor, productor, resumen_ingrediente)

@@ -400,8 +400,8 @@ class vam_condicion_contrato(models.Model):
     id_pais_envio = models.IntegerField(null=True)
 
 class PedidoManager(models.Manager):
-    def create_pedido(self, id_pedido, estatus, descripcion, fecha_emision, id_productor, id_proveedor, nfactura, precio_total):
-        pedido = self.create(id_pedido=id_pedido, estatus=estatus, descripcion=descripcion, fecha_emision=fecha_emision, id_productor=id_productor, id_proveedor=id_proveedor, nfactura=nfactura, precio_total=precio_total)
+    def create_pedido(self, id_pedido, estatus, descripcion, fecha_emision, id_productor, id_proveedor, nfactura, precio_total, id_condicion_envio, id_contrato_envio, id_condicion_pago):
+        pedido = self.create(id_pedido=id_pedido, estatus=estatus, descripcion=descripcion, fecha_emision=fecha_emision, id_productor=id_productor, id_proveedor=id_proveedor, nfactura=nfactura, precio_total=precio_total, id_condicion_envio = id_condicion_envio, id_contrato_envio= id_contrato_envio, id_condicion_pago = id_condicion_pago)
         pedido.save()
         return pedido
 
@@ -440,10 +440,16 @@ class vam_detalle_pedido(models.Model):
     subtotal = models.FloatField()
     id_presentacion = models.ForeignKey(vam_presentacion, on_delete=models.CASCADE, db_column='id_presentacion')
 
+class PagoManager(models.Manager):
+    def create_pago(self, id_pago, fecha_pago, monto_pagado, id_pedido):
+        pago = self.create(id_pago=id_pago, fecha_pago=fecha_pago, monto_pagado=monto_pagado, id_pedido=id_pedido)
+        pago.save()
+        return pago
 class vam_pago(models.Model):
     class Meta:
         db_table = 'vam_pago'
 
+    objects = PagoManager()
     id_pedido = models.ForeignKey(vam_pedido, on_delete=models.CASCADE, db_column='id_pedido')
     id_pago = models.IntegerField(primary_key=True)
     fecha_pago = models.DateField()
