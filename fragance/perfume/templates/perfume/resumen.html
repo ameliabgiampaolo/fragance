@@ -80,15 +80,14 @@
           </tr>
         </thead>
         <tbody>
+            {% load common %}
           {% for ingrediente in ingredientes %}
           <tr>
             <th scope="row">{{id_pedido}}</th>
             <td>{{productor.nombre}}</td>
             <td>{{proveedor.nombre}}</td>
             <td>{{ingrediente}}</td>
-          {% endfor %}
-          {% for cant in cantidad %}
-          <td>{{cant}}</td>
+            <td>{{cantidad|get_at_index:forloop.counter0}}</td>
           {% endfor %}
           </tr>
         </tbody>

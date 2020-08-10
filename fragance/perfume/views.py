@@ -152,8 +152,8 @@ def resumen(request, id_pedido, cantidad, proveedor, productor, ingredientes):
 
 def delete(request, id_pedido): 
     context ={} 
-    detalle_pedido = vam_detalle_pedido.objects.get(id_pedido=id_pedido)
-    pedido = vam_pedido.objects.get(id_pedido=id_pedido)
+    detalle_pedido = vam_detalle_pedido.objects.filter(id_pedido=id_pedido)
+    pedido = vam_pedido.objects.filter(id_pedido=id_pedido)
 
     detalle_pedido.delete()
     pedido.delete()  
