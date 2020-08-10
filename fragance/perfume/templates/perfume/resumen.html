@@ -83,11 +83,12 @@
           </tr>
         </thead>
         <tbody>
+          {% for i in range(len(ingredientes)) %}
           <tr>
             <th scope="row">{{id_pedido}}</th>
             <td>{{productor.nombre}}</td>
             <td>{{proveedor.nombre}}</td>
-            <td>{{ingrediente2.nombre}}</td>
+            <td>{{ingrediente[i].nombre}}</td>
             <td>{{cantidad}}</td>
           </tr>
         </tbody>

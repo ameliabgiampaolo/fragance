@@ -51,13 +51,16 @@ def compra(request, id_productor, id_proveedor):
         form = IngForm(ingredientes, request.POST)
         formset = CantidadFormset(request.POST)
         cantidad = []
+        resumen = []
         now = datetime.date.today()
+        pedido_creado = False
         i = 0
         if formset.is_valid():
 
             for fset in formset:
                 if fset.cleaned_data.get('cantidad') != None:
                     ingrediente = ingredientes[i]
+                    resumen.append(ingrediente)
                     cantidad = fset.cleaned_data.get('cantidad')
                     esencia = True
                     try:
@@ -71,15 +74,19 @@ def compra(request, id_productor, id_proveedor):
                     else:
                         presentacion = vam_presentacion.objects.filter(id_ingrediente_otro=ingrediente2)[0]
 
-                    id_productor = vam_productor.objects.get(id_productor=id_productor)
-                    id_proveedor = vam_proveedor.objects.get(id_proveedor=id_proveedor)
-                    id_pedido = next_val(vam_pedido)
+                    productor_id = vam_productor.objects.get(id_productor=id_productor)
+                    proveedor_id = vam_proveedor.objects.get(id_proveedor=id_proveedor)
+
+                    if pedido_creado == False:
+                        id_pedido = next_val(vam_pedido)
+                        pedido = vam_pedido.objects.create_pedido(id_pedido,'pendiente', 'nada', now, productor_id, proveedor_id, random.randint(1,100), presentacion.precio)
+                        pedido_creado = True
+                        
                     id_detalle = next_val(vam_detalle_pedido)
-                    pedido = vam_pedido.objects.create_pedido(id_pedido,'pendiente', 'nada', now, id_productor, id_proveedor, random.randint(1,100), presentacion.precio)
                     detalle = vam_detalle_pedido.objects.create_detalle(id_detalle,pedido, cantidad, presentacion.precio, presentacion)
                     i += 1
                 
-            return redirect('resumen', id_pedido, cantidad, proveedor, productor, ingrediente)
+            return redirect('resumen', id_pedido, cantidad, proveedor, productor, resumen)
     else:  
         formset = CantidadFormset()
         form = IngForm(ingredientes)
@@ -111,18 +118,13 @@ def save(request, id_pedido):
     context = {'pedido': pedido}
     return render(request, 'perfume/pago.html', context)
 
-def resumen(request, id_pedido, cantidad, proveedor, productor, ingrediente):
+def resumen(request, id_pedido, cantidad, proveedor, productor, ingredientes):
     
-    try:
-        ingrediente2= vam_ingrediente_esencia.objects.get(nombre=ingrediente)
-    except vam_ingrediente_esencia.DoesNotExist:
-        ingrediente2= vam_ingrediente_otro.objects.get(nombre=ingrediente)
-
     proveedor = vam_proveedor.objects.get(id_proveedor=proveedor)
     productor = vam_productor.objects.get(id_productor=productor)
     #ingrediente_otro = vam_ingrediente_otro.objects.get(id_ingrediente_otro = ingrediente_otro.id_ingrediente_otro)
     #if ingrediente == None:
-    context = {'id_pedido': id_pedido, 'cantidad': cantidad, 'proveedor': proveedor, 'productor': productor, 'ingrediente2': ingrediente2}
+    context = {'id_pedido': id_pedido, 'cantidad': cantidad, 'proveedor': proveedor, 'productor': productor, 'ingredientes': ingredientes}
     return render(request, 'perfume/resumen.html', context)
     #elif ingrediente_otro == None:
         #context = {'id_pedido': id_pedido, 'cantidad': cantidad, 'proveedor': proveedor, 'productor': productor, 'ingrediente': ingrediente, 'ingrediente_otro': 0}
