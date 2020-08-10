@@ -132,18 +132,23 @@ def separar(ingredientes):
 
     return lista
 
+def intercalar(lista, lista2):
+    intercalado = []
+    cant = False
+    j = 0
+    for i in range(len(lista)):
+        intercalado.append(list(lista[i] + lista2[i]))
+    return intercalado
+
 def resumen(request, id_pedido, cantidad, proveedor, productor, ingredientes):
     ingredientes = separar(ingredientes)
     cantidad = separar(cantidad)
     proveedor = vam_proveedor.objects.get(id_proveedor=proveedor)
     productor = vam_productor.objects.get(id_productor=productor)
-    #ingrediente_otro = vam_ingrediente_otro.objects.get(id_ingrediente_otro = ingrediente_otro.id_ingrediente_otro)
-    #if ingrediente == None:
+   # ingredientes = intercalar(ingredientes, cantidad)
     context = {'id_pedido': id_pedido, 'cantidad': cantidad, 'proveedor': proveedor, 'productor': productor, 'ingredientes': ingredientes}
     return render(request, 'perfume/resumen.html', context)
-    #elif ingrediente_otro == None:
-        #context = {'id_pedido': id_pedido, 'cantidad': cantidad, 'proveedor': proveedor, 'productor': productor, 'ingrediente': ingrediente, 'ingrediente_otro': 0}
-        #return render(request, 'perfume/resumen.html', context)
+
 
 def delete(request, id_pedido): 
     context ={} 
