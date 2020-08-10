@@ -51,7 +51,8 @@ def compra(request, id_productor, id_proveedor):
         form = IngForm(ingredientes, request.POST)
         formset = CantidadFormset(request.POST)
         cantidad = []
-        resumen = []
+        resumen_ingrediente = ''
+        resumen_cantidad = ''
         now = datetime.date.today()
         pedido_creado = False
         i = 0
@@ -60,8 +61,9 @@ def compra(request, id_productor, id_proveedor):
             for fset in formset:
                 if fset.cleaned_data.get('cantidad') != None:
                     ingrediente = ingredientes[i]
-                    resumen.append(ingrediente)
+                    resumen_ingrediente += ingrediente + ','
                     cantidad = fset.cleaned_data.get('cantidad')
+                    resumen_cantidad += str(cantidad) + ','
                     esencia = True
                     try:
                         ingrediente2 = vam_ingrediente_esencia.objects.get(nombre=ingrediente)
@@ -86,7 +88,7 @@ def compra(request, id_productor, id_proveedor):
                     detalle = vam_detalle_pedido.objects.create_detalle(id_detalle,pedido, cantidad, presentacion.precio, presentacion)
                     i += 1
                 
-            return redirect('resumen', id_pedido, cantidad, proveedor, productor, resumen)
+            return redirect('resumen', id_pedido, resumen_cantidad, proveedor, productor, resumen_ingrediente)
     else:  
         formset = CantidadFormset()
         form = IngForm(ingredientes)
@@ -118,8 +120,21 @@ def save(request, id_pedido):
     context = {'pedido': pedido}
     return render(request, 'perfume/pago.html', context)
 
+def separar(ingredientes):
+    palabra = ''
+    lista = []
+    for i in range(len(ingredientes)):
+        if ingredientes[i] != ',':
+            palabra += ingredientes[i]
+        else:
+            lista.append(palabra)
+            palabra = ''
+
+    return lista
+
 def resumen(request, id_pedido, cantidad, proveedor, productor, ingredientes):
-    
+    ingredientes = separar(ingredientes)
+    cantidad = separar(cantidad)
     proveedor = vam_proveedor.objects.get(id_proveedor=proveedor)
     productor = vam_productor.objects.get(id_productor=productor)
     #ingrediente_otro = vam_ingrediente_otro.objects.get(id_ingrediente_otro = ingrediente_otro.id_ingrediente_otro)
