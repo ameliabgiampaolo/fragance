@@ -66,7 +66,14 @@
         </div>
 </div>
 
+{% load common %}
+
+{% set num2 = 1 %}
+
+
         <div style="text-align: center;">
+          {% csrf_token %}
+          {{ formset.management_form }}
             {% for ing in ingredientes %}
                 <h4><li>{{ing}}</li></h4>
             {% endfor %}
@@ -81,16 +88,28 @@
     </div>
     
     <div class="hero-banner__content">
-      <div class="row">
-          <div class="col-md-6">
               <form method="POST" class="post-form">
               {% csrf_token %}
               {{ formset.management_form }}
-              <h4>{{ form.as_p }}</h4>
-              
-              {% for form in formset %}
-              {{ form }}
+              {% for f in form %}
+              <div class="row">
+                  <div class="col-md-12">
+              <h4>{{ f}}</h4>
               {% endfor %}
+              </div>
+                  {% for form in formset %}
+                  <div class="row">
+                      <div class="col-md-6">
+                  {{ form.cantidad }}
+                </div>
+              </div>    
+                  {% endfor %}
+          </div>
+      
+      </div>
+              
+
+              
           </div>
   </div>
         <div class="form-row text-center">
