@@ -83,7 +83,7 @@
                 <td>{{p.precio_total}}</td>
                 <td>{{p.nfactura}}</td>
                 <td>{{p.estatus}}</td>
-                <td><a class="btn btn-success" href="{% url 'save' p.id_pedido %}">{{ p.id_pedido }}</a></td>
+                <td><a class="btn btn-success" href="{% url 'save' p.id_pedido %}">Pagar pedido Nº {{ p.id_pedido }}</a></td>
             </tr>
             {% endfor %} 
             </form>   
